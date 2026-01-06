@@ -26,15 +26,15 @@ import stl
 
 from ._render import render_stl
 from .exceptions import RenderError
+from solid2.core.object_base import OpenSCADObject
 
 
 def view(
-    obj,
+    obj: OpenSCADObject,
     width: int = 400,
     height: int = 400,
     grid_unit: float = -1,
     outfile: Optional[Union[str, PathLike]] = None,
-    openscad_exec: Optional[Union[str, PathLike]] = None,
 ) -> pjs.Renderer:
     """View an OpenSCAD object.
 
@@ -58,13 +58,13 @@ def view(
     """
     try:
         if outfile:
-            render_stl(obj, outfile, openscad_exec=openscad_exec)
+            render_stl(obj, outfile)
             r = view_stl(outfile, width=width, height=height, grid_unit=grid_unit)
         else:
             with tempfile.NamedTemporaryFile(
                 suffix=".stl", delete=False
             ) as stl_tmp_file:
-                render_stl(obj, stl_tmp_file.name, openscad_exec=openscad_exec)
+                render_stl(obj, stl_tmp_file.name)
                 r = view_stl(
                     stl_tmp_file.name, width=width, height=height, grid_unit=grid_unit
                 )
