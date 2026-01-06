@@ -17,10 +17,11 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 
 import logging
 from os import PathLike
-from typing import  Union
+from typing import Union
+
 from solid2.core.object_base import OpenSCADObject
 
-from .exceptions import OpenSCADError, RenderError
+from .exceptions import OpenSCADError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -46,4 +47,4 @@ def render_stl(
         obj.save_as_stl(filename=outfile)
     except Exception as e:
         LOGGER.error("Error rendering STL: %s", e)
-        raise OpenSCADError(f"Error rendering STL, see log for details")
+        raise OpenSCADError("Error rendering STL, see log for details")

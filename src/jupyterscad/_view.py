@@ -23,10 +23,10 @@ from typing import Optional, Union
 import numpy as np
 import pythreejs as pjs
 import stl
+from solid2.core.object_base import OpenSCADObject
 
 from ._render import render_stl
 from .exceptions import RenderError
-from solid2.core.object_base import OpenSCADObject
 
 
 def view(

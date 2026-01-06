@@ -191,4 +191,3 @@ def scad_file(tmp_path):
 @pytest.fixture()
 def output_file(tmp_path):
     return tmp_path / "out.stl"
-
