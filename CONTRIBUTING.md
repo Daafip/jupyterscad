@@ -59,6 +59,8 @@ To minimize the feedback loop, we have configured Nox so that it can be used to 
 
 This repository uses [Nox](https://nox.thea.codes/) to automate development.
 
+Nox is based on [uv](https://github.com/astral-sh/uv) so ensure you have this installed. 
+
 Install Nox in your local dev environment:
 
 ```console
