@@ -15,7 +15,6 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
-from fileinput import filename
 import logging
 from os import PathLike
 from pathlib import Path
@@ -47,11 +46,11 @@ def render_stl(
     """
     try:
         if isinstance(outfile, PathLike):
-            filename = outfile.absolute().as_posix()
+            filename = Path(outfile).absolute().as_posix()
         elif isinstance(outfile, str):
             filename = Path(outfile).absolute().as_posix()
             if not Path(filename).is_absolute():
-                raise ValueError(f"outfile string must be an absolute path, currently is not: {outfile}")
+                raise ValueError("outfile string must be an absolute path")
         obj.save_as_stl(filename=filename)
     except Exception as e:
         LOGGER.error("Error rendering STL: %s", e)

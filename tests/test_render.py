@@ -109,6 +109,7 @@ class TestRenderStlWithScadString:
         output_file = tmp_path / "complex.stl"
         render_stl(obj, output_file)
 
+
 class TestRenderStlOutputPath:
     """Tests for output path handling."""
 
@@ -132,6 +133,7 @@ class TestRenderStlOutputPath:
         output_file.parent.mkdir(parents=True, exist_ok=True)
         render_stl(obj, output_file)
         assert output_file.exists()
+
 
 class TestRenderStlTransformations:
     """Tests for rendering transformed objects."""
