@@ -62,6 +62,7 @@ class TestRenderStlWithSolid2Objects:
         assert output_path.exists()
         assert output_path.stat().st_size > 0
         output_path.unlink()
+        output_path.with_suffix(".stl.scad").unlink()
 
     def test_render_sphere(self, relative_path):
         """Test rendering a sphere."""
@@ -72,6 +73,7 @@ class TestRenderStlWithSolid2Objects:
         assert output_path.exists()
         assert output_path.stat().st_size > 0
         output_path.unlink()
+        output_path.with_suffix(".stl.scad").unlink()
 
     def test_render_cylinder(self, relative_path):
         """Test rendering a cylinder."""
@@ -82,6 +84,7 @@ class TestRenderStlWithSolid2Objects:
         assert output_path.exists()
         assert output_path.stat().st_size > 0
         output_path.unlink()
+        output_path.with_suffix(".stl.scad").unlink()
 
     def test_render_combined_objects(self, relative_path):
         """Test rendering combined solid2 objects (union)."""
@@ -92,6 +95,7 @@ class TestRenderStlWithSolid2Objects:
         assert output_path.exists()
         assert output_path.stat().st_size > 0
         output_path.unlink()
+        output_path.with_suffix(".stl.scad").unlink()
 
     def test_render_difference(self, relative_path):
         """Test rendering difference of objects."""
@@ -102,6 +106,7 @@ class TestRenderStlWithSolid2Objects:
         assert output_path.exists()
         assert output_path.stat().st_size > 0
         output_path.unlink()
+        output_path.with_suffix(".stl.scad").unlink()
 
     def test_render_intersection(self, relative_path):
         """Test rendering intersection of objects."""
@@ -112,6 +117,7 @@ class TestRenderStlWithSolid2Objects:
         assert output_path.exists()
         assert output_path.stat().st_size > 0
         output_path.unlink()
+        output_path.with_suffix(".stl.scad").unlink()
 
 
 class TestRenderStlWithScadString:
@@ -126,6 +132,7 @@ class TestRenderStlWithScadString:
         assert output_path.exists()
         assert output_path.stat().st_size > 0
         output_path.unlink()
+        output_path.with_suffix(".stl.scad").unlink()
 
     def test_render_scad_string_complex(self, relative_path: Path):
         """Test rendering complex object."""
@@ -151,6 +158,7 @@ class TestRenderStlTransformations:
         assert output_path.exists()
         assert output_path.stat().st_size > 0
         output_path.unlink()
+        output_path.with_suffix(".stl.scad").unlink()
 
     def test_render_rotated_object(self, relative_path):
         """Test rendering a rotated object."""
@@ -161,6 +169,7 @@ class TestRenderStlTransformations:
         assert output_path.exists()
         assert output_path.stat().st_size > 0
         output_path.unlink()
+        output_path.with_suffix(".stl.scad").unlink()
 
     def test_render_scaled_object(self, relative_path):
         """Test rendering a scaled object."""
@@ -171,6 +180,7 @@ class TestRenderStlTransformations:
         assert output_path.exists()
         assert output_path.stat().st_size > 0
         output_path.unlink()
+        output_path.with_suffix(".stl.scad").unlink()
 
 
 @pytest.mark.skip(
