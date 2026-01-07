@@ -157,7 +157,59 @@ class Visualizer:
 
     def add_axes(self, scene):
         # The X axis is red. The Y axis is green. The Z axis is blue.
-        scene.add(pjs.AxesHelper(max(self.stl_mesh.max_ * 2)))
+        axis_length = max(self.stl_mesh.max_ * 2)
+        scene.add(pjs.AxesHelper(axis_length))
+
+        # Add X, Y, Z text labels using line segments
+        char_width = axis_length * 0.12
+        label_pos = axis_length * 1.5  # Position along the axis
+
+        # Define characters as 2D line segments (normalized 0-1)
+        char_x = [[[0, 0], [1, 1]], [[0, 1], [1, 0]]]  # X shape
+        char_y = [
+            [[0.5, 0], [0.5, 0.5]],
+            [[0.5, 0.5], [0, 1]],
+            [[0.5, 0.5], [1, 1]],
+        ]  # Y shape
+        char_z = [[[0, 1], [1, 1]], [[1, 1], [0, 0]], [[0, 0], [1, 0]]]  # Z shape
+
+        # X label: on XZ plane (y=0), character drawn in YZ
+        scene.add(
+            self._make_label(
+                char_x, "red", lambda x, y: [label_pos, x, y], char_width=char_width
+            )
+        )
+        # Y label: on XY plane (z=0), character drawn in XZ
+        scene.add(
+            self._make_label(
+                char_y, "green", lambda x, y: [x, label_pos, y], char_width=char_width
+            )
+        )
+        # Z label: on YZ plane (x=0), character drawn in XY
+        scene.add(
+            self._make_label(
+                char_z, "blue", lambda x, y: [x, y, label_pos], char_width=char_width
+            )
+        )
+
+    def _make_label(self, char_segs, color, transform_func, char_width):
+        verts = []
+        cols = []
+        for seg in char_segs:
+            for pt in seg:
+                # Scale and center the 2D point
+                x = (pt[0] - 0.5) * char_width
+                y = (pt[1] - 0.5) * char_width
+                # Transform to 3D position
+                verts.append(transform_func(x, y))
+                cols.append(color)
+
+        lines_geom = pjs.Geometry(vertices=verts, colors=cols)
+        return pjs.LineSegments(
+            geometry=lines_geom,
+            material=pjs.LineBasicMaterial(linewidth=3, vertexColors="VertexColors"),
+            type="LinePieces",
+        )
 
     def add_grid(self, scene, unit=1):
         def roundToUnits(x):
