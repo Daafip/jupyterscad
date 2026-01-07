@@ -70,7 +70,24 @@ jobs:
       run: sudo apt-get install -y openscad
     - name: Install OpenSCAD (Windows)
       if: matrix.os == 'windows-latest'
-      run: choco install openscad -y
+      shell: pwsh
+      run: |
+        choco install openscad -y
+        # Prefer console launcher for CI
+        $exe = (Get-Command openscad.com, openscad.exe -ErrorAction SilentlyContinue | Select-Object -First 1).Path
+        if (-not $exe) {
+          $candidates = @('C:\Program Files\OpenSCAD','C:\Program Files (x86)\OpenSCAD')
+          foreach ($d in $candidates) {
+            if (Test-Path (Join-Path $d 'openscad.com')) { $exe = (Join-Path $d 'openscad.com'); break }
+            if (Test-Path (Join-Path $d 'openscad.exe')) { $exe = (Join-Path $d 'openscad.exe'); break }
+          }
+        }
+        if (-not $exe) { throw 'OpenSCAD not found after install' }
+        $dir = Split-Path $exe -Parent
+        $dir | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        "OPENSCAD_BIN=$exe" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+        Get-Command $exe | Format-List
+        & $exe --version
     - name: Test
       run: nox -s test-${{ matrix.python-version }}
 
