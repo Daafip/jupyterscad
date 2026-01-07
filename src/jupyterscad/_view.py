@@ -38,23 +38,22 @@ def view(
 ) -> pjs.Renderer:
     """View an OpenSCAD object.
 
-    Typical usage example:
+        Typical usage example:
 
-        >>> view(cube(3))
+            >>> view(cube(3))
 
-    Args:
-        obj: OpenSCAD object to visualize.
-        width: Visualization pixel width on page.
-        height: Visualization pixel height on page.
-        grid_unit: Grid cell size, 0 to disable, -1 for automatic.
-        outfile: Name of stl file to generate. No stl file is generated if None.
-        openscad_exec: Path to openscad executable.
+        Args:
+            obj: OpenSCAD object to visualize.
+            width: Visualization pixel width on page.
+            height: Visualization pixel height on page.
+            grid_unit: Grid cell size, 0 to disable, -1 for automatic.
+            outfile: Name of stl file to generate. No stl file is generated if None.
+    s
+        Returns:
+            Rendering to be displayed.
 
-    Returns:
-        Rendering to be displayed.
-
-    Raises:
-        exceptions.OpenSCADError: An error occurred running OpenSCAD.
+        Raises:
+            exceptions.OpenSCADError: An error occurred running OpenSCAD.
     """
     try:
         if outfile:
