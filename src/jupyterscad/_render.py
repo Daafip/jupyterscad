@@ -15,8 +15,10 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
+from fileinput import filename
 import logging
 from os import PathLike
+from pathlib import Path
 from typing import Union
 
 from solid2.core.object_base import OpenSCADObject
@@ -44,7 +46,13 @@ def render_stl(
         exceptions.OpenSCADException: An error occurred running OpenSCAD.
     """
     try:
-        obj.save_as_stl(filename=outfile)
+        if isinstance(outfile, PathLike):
+            filename = outfile.absolute().as_posix()
+        elif isinstance(outfile, str):
+            filename = Path(outfile).absolute().as_posix()
+            if not Path(filename).is_absolute():
+                raise ValueError(f"outfile string must be an absolute path, currently is not: {outfile}")
+        obj.save_as_stl(filename=filename)
     except Exception as e:
         LOGGER.error("Error rendering STL: %s", e)
         raise OpenSCADError("Error rendering STL, see log for details")
